@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CodeX和Claude code产品发布时间轴</title>
+  <style>
+    :root {
+      --bg: #f6f4ef;
+      --ink: #1e2128;
+      --muted: #6c7280;
+      --line: #d7dbe3;
+      --codex: #f05f45;
+      --claude: #1e9a95;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, #fbfaf8 0%, var(--bg) 100%);
+      color: var(--ink);
+      font-family: "SF Pro Display", "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+
+    .page {
+      width: min(1760px, calc(100vw - 32px));
+      margin: 18px auto 28px;
+    }
+
+    .header {
+      margin-bottom: 14px;
+    }
+
+    .header h1 {
+      margin: 0 0 8px;
+      font-size: 30px;
+      letter-spacing: -0.03em;
+    }
+
+    .header p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+      max-width: 1120px;
+    }
+
+    .legend {
+      display: flex;
+      gap: 12px;
+      margin: 16px 0 14px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(30, 33, 40, 0.08);
+      font-size: 13px;
+      color: var(--ink);
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--dot);
+    }
+
+    .table-wrap {
+      overflow: auto;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(30, 33, 40, 0.08);
+      box-shadow: 0 16px 40px rgba(24, 29, 39, 0.08);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      min-width: 1080px;
+    }
+
+    thead th {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      background: rgba(248, 248, 249, 0.98);
+      backdrop-filter: blur(10px);
+      font-size: 13px;
+      text-align: left;
+      color: var(--muted);
+      padding: 14px 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    tbody th,
+    tbody td {
+      vertical-align: top;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    tbody th {
+      width: 126px;
+      min-width: 126px;
+      background: rgba(248, 248, 249, 0.72);
+      font-size: 13px;
+      font-weight: 700;
+      color: #39404c;
+      position: sticky;
+      left: 0;
+      z-index: 1;
+    }
+
+    td {
+      width: 50%;
+      background: rgba(255, 255, 255, 0.55);
+    }
+
+    .cell-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .card {
+      border-radius: 16px;
+      background: color-mix(in srgb, var(--accent) 14%, white);
+      border: 1px solid color-mix(in srgb, var(--accent) 24%, white);
+      padding: 12px 12px 10px;
+      min-height: 74px;
+    }
+
+    .card .title {
+      font-size: 14px;
+      line-height: 1.45;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #1a1e25;
+    }
+
+    .card .summary {
+      font-size: 12px;
+      line-height: 1.55;
+      color: #53606e;
+    }
+
+    .text-event {
+      padding: 2px 2px 1px;
+    }
+
+    .text-event .title {
+      display: inline;
+      font-size: 13px;
+      font-weight: 700;
+      color: #20242b;
+    }
+
+    .text-event .summary {
+      display: inline;
+      margin-left: 8px;
+      font-size: 12px;
+      line-height: 1.65;
+      color: #6b7482;
+    }
+
+    .empty {
+      color: #a2a8b3;
+      text-align: center;
+      font-size: 13px;
+      background: rgba(250, 250, 250, 0.75);
+    }
+
+    .row-note {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="header">
+      <h1>CodeX和Claude code产品发布时间轴</h1>
+      <p>来源：产品官方网站</p>
+    </div>
+
+    <div class="legend">
+      <span class="pill"><span class="dot" style="--dot: var(--codex)"></span>Codex</span>
+      <span class="pill"><span class="dot" style="--dot: var(--claude)"></span>Claude Code</span>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>时间点</th>
+            <th>Codex</th>
+            <th>Claude Code</th>
+          </tr>
+        </thead>
+        <tbody id="timeline-body"></tbody>
+      </table>
+    </div>
+
+    <div class="row-note">规则：`importance >= 4` 用底色模块，`importance < 4` 用纯文字。</div>
+  </div>
+
+  <script>
+    const PRODUCTS = {
+      codex: { label: "Codex", color: "var(--codex)" },
+      claude: { label: "Claude Code", color: "var(--claude)" },
+    };
+
+    const ROWS = [
+      {
+        date: "2025-02-24",
+        codex: [],
+        claude: [
+          { title: "Claude Code 首发就瞄准终端里的执行型编码代理", summary: "首发就能读、改、测、提 GitHub。", importance: 5 },
+        ],
+      },
+      {
+        date: "2025-04-01",
+        codex: [
+          { title: "CLI 首发，把 Codex 先做成终端里的执行型代理", summary: "先从命令行切入，而不是先做网页。", importance: 5 },
+        ],
+        claude: [],
+      },
+      {
+        date: "2025-05-16",
+        codex: [
+          { title: "推出 Web 研究预览，把任务搬到云端 sandbox 并行执行", summary: "第一次出现可交互 Web 端形态。", importance: 5 },
+        ],
+        claude: [],
+      },
+      {
+        date: "2025-05-19",
+        codex: [
+          { title: "iOS 端加入任务查看和 PR 推送", summary: "把代理能力带到移动端。", importance: 2 },
+        ],
+        claude: [],
+      },
+      {
+        date: "2025-05-22",
+        codex: [
+          { title: "重做 environment page", summary: "执行环境配置更清晰，也更明确提示无网络边界。", importance: 2 },
+        ],
+        claude: [
+          { title: "Claude Code 进入正式可用阶段", summary: "从研究预览进入 GA。", importance: 3 },
+        ],
+      },
+      {
+        date: "2025-06-03",
+        codex: [
+          { title: "支持联网、更新已有 PR，并向 Plus 扩展", summary: "补齐真实开发流程中的关键能力。", importance: 4 },
+        ],
+        claude: [],
+      },
+      {
+        date: "2025-06-04",
+        codex: [],
+        claude: [
+          { title: "向 Pro / Max 用户开放", summary: "开始进入更广泛的订阅用户体系。", importance: 2 },
+        ],
+      },
+      {
+        date: "2025-06-11",
+        codex: [],
+        claude: [
+          { title: "SDK 上线，开始更自然地接入外部系统", summary: "先开放 TypeScript / Python 接入面。", importance: 4 },
+        ],
+      },
+      {
+        date: "2025-06-13",
+        codex: [
+          { title: "Best of N 上线，支持一次生成多个方案", summary: "开始显式比较多个解法。", importance: 2 },
+        ],
+        claude: [],
+      },
+      {
+        date: "2025-06-18",
+        codex: [],
+        claude: [
+          { title: "MCP 远程连接增强，支持 SSE / HTTP / OAuth", summary: "开始更系统地联通外部工具和企业资源。", importance: 3 },
+        ],
+      },
+      {
+        date: "2025-08-06",
+        codex: [],
+        claude: [
+          { title: "安全审查能力上线", summary: "把代理从写代码扩到审代码。", importance: 4 },
+        ],
+      },
+      {
+        date: "2025-08-20",
+        codex: [],
+        claude: [
+          { title: "进入 Team / Enterprise，并补齐治理能力", summary: "seat 管理、spend control、usage analytics、Compliance API 一起进来。", importance: 4 },
+        ],
+      },
+      {
+        date: "2025-08-27",
+        codex: [
+          { title: "进入 VS Code、Cursor、Windsurf 等 IDE", summary: "把代理搬进开发者主工作台。", importance: 5 },
+        ],
+        claude: [],
+      },
+      {
+        date: "2025-09-15",
+        codex: [
+          { title: "GPT-5-Codex 发布，CLI / IDE / Cloud 体验明显拉齐", summary: "从会写代码往会组织任务再进一步。", importance: 5 },
+        ],
+        claude: [],
+      },
+      {
+        date: "2025-09-29",
+        codex: [],
+        claude: [
+          { title: "VS Code、checkpoints、subagents、后台任务一起上线", summary: "第一次明显进入更自主的工程代理阶段。", importance: 5 },
+        ],
+      },
+      {
+        date: "2025-10-06",
+        codex: [
+          { title: "进入 GA，开始全面接入企业协作流", summary: "Slack、SDK、GitHub Action 一起进来。", importance: 4 },
+        ],
+        claude: [],
+      },
+      {
+        date: "2025-10-09",
+        codex: [],
+        claude: [
+          { title: "插件体系进入 public beta", summary: "slash commands、subagents、hooks、MCP servers 可以打包分发。", importance: 4 },
+        ],
+      },
+      {
+        date: "2025-10-20",
+        codex: [],
+        claude: [
+          { title: "推出 Web 版，让代理通过浏览器承担并行云端任务", summary: "第一次拥有真正可交互的 Web 端形态。", importance: 5 },
+        ],
+      },
+      {
+        date: "2025-10-22",
+        codex: [
+          { title: "支持在 GitHub Issues / PRs 中 @codex", summary: "把代理直接嵌进 GitHub 协作流。", importance: 4 },
+        ],
+        claude: [],
+      },
+      {
+        date: "2025-11-12",
+        codex: [],
+        claude: [
+          { title: "Web 版扩展到 Team / Enterprise premium seat", summary: "浏览器中的云端协作形态开始进入正式团队场景。", importance: 2 },
+        ],
+      },
+      {
+        date: "2025-11-24",
+        codex: [],
+        claude: [
+          { title: "更强模型与上下文压缩进入工作流", summary: "长任务的稳定推进能力继续增强。", importance: 3 },
+        ],
+      },
+      {
+        date: "2025-12-03",
+        codex: [],
+        claude: [
+          { title: "商业化里程碑与 Bun 收购同步公布", summary: "GA 六个月后达到 10 亿美元 run-rate revenue。", importance: 4 },
+        ],
+      },
+      {
+        date: "2025-12-04",
+        codex: [
+          { title: "推出 Codex for Linear", summary: "让云端编码任务直接从 issue 协作流里发起。", importance: 4 },
+        ],
+        claude: [],
+      },
+      {
+        date: "2025-12-19",
+        codex: [
+          { title: "Skills 上线，让高频做法和规则可以沉淀复用", summary: "开始积累组织级工作经验。", importance: 4 },
+        ],
+        claude: [],
+      },
+      {
+        date: "2026-01-12",
+        codex: [],
+        claude: [
+          { title: "Claude Cowork 首发，把代理能力扩到知识工作与桌面任务", summary: "从编码代理进入本地文件和桌面工作场景。", importance: 5 },
+        ],
+      },
+      {
+        date: "2026-01-13",
+        codex: [],
+        claude: [
+          { title: "Labs 文章把 Claude Code 定义为 Anthropic 核心 agent 引擎之一", summary: "产品叙事从 coding tool 转向更广义的 agent 能力底座。", importance: 2 },
+        ],
+      },
+      {
+        date: "2026-02-02",
+        codex: [
+          { title: "独立桌面 App 发布，整合 worktree、多线程、语音等能力", summary: "第一次拥有完整桌面工作台形态。", importance: 5 },
+        ],
+        claude: [],
+      },
+      {
+        date: "2026-02-03",
+        codex: [],
+        claude: [
+          { title: "Xcode 开始支持 Claude Agent SDK", summary: "subagents、background tasks、plugins 进入原生 IDE 工作流。", importance: 4 },
+        ],
+      },
+      {
+        date: "2026-02-25",
+        codex: [],
+        claude: [
+          { title: "Cowork 开始支持定时任务和 on-demand 任务", summary: "把桌面代理往持续执行方向推。", importance: 2 },
+        ],
+      },
+      {
+        date: "2026-03-05",
+        codex: [
+          { title: "GPT-5.4 进入 Codex", summary: "带来更强工具使用、computer use 和超长上下文。", importance: 3 },
+        ],
+        claude: [],
+      },
+      {
+        date: "2026-03-17",
+        codex: [
+          { title: "GPT-5.4 mini 进入 Codex", summary: "开始明确服务于更轻量的 subagent 和探索类工作。", importance: 2 },
+        ],
+        claude: [],
+      },
+      {
+        date: "2026-03-23",
+        codex: [],
+        claude: [
+          { title: "computer use 进入研究预览，开始真正操作电脑", summary: "能点、输、开、看，跨应用完成任务。", importance: 5 },
+        ],
+      },
+      {
+        date: "2026-03-25",
+        codex: [
+          { title: "正式支持 plugins", summary: "可打包 skills、集成和 MCP server 配置，进入平台化阶段。", importance: 4 },
+        ],
+        claude: [],
+      },
+      {
+        date: "2026-04-09",
+        codex: [],
+        claude: [
+          { title: "Cowork 进入 GA，并扩到 Windows 与企业治理能力", summary: "从新奇能力变成可部署的桌面代理产品。", importance: 5 },
+        ],
+      },
+      {
+        date: "2026-04-10",
+        codex: [
+          { title: "MCP Apps 和 custom MCP servers 支持继续增强", summary: "开始更系统地补资源读取、文件参数上传和工具调用元数据。", importance: 3 },
+        ],
+        claude: [],
+      },
+      {
+        date: "2026-04-13",
+        codex: [],
+        claude: [
+          { title: "v2.1.104 / v2.1.105", summary: "强化 worktree、plugin monitor、PreCompact hook 和长会话稳定性。", importance: 2 },
+        ],
+      },
+      {
+        date: "2026-04-14",
+        codex: [],
+        claude: [
+          { title: "v2.1.108", summary: "加入 1 小时 prompt cache TTL 和 recap，补强长任务回到现场的能力。", importance: 2 },
+        ],
+      },
+      {
+        date: "2026-04-15",
+        codex: [
+          { title: "新增 codex marketplace add", summary: "插件市场安装流和 MCP / plugin 支持继续产品化。", importance: 3 },
+        ],
+        claude: [
+          { title: "v2.1.110", summary: "Remote Control 和 /doctor 继续增强。", importance: 2 },
+        ],
+      },
+      {
+        date: "2026-04-16",
+        codex: [
+          { title: "从编码代理扩展成更广义的工作代理", summary: "浏览器、computer use、thread automations、memories 全部到位。", importance: 5 },
+        ],
+        claude: [
+          { title: "v2.1.111 / v2.1.112", summary: "ultrareview、多 agent 审查、PowerShell 与 effort 控制继续增强。", importance: 3 },
+        ],
+      },
+      {
+        date: "2026-04-17",
+        codex: [],
+        claude: [
+          { title: "v2.1.113", summary: "CLI 进一步转向原生二进制，并补细粒度 deniedDomains 规则。", importance: 2 },
+        ],
+      },
+      {
+        date: "2026-04-18",
+        codex: [],
+        claude: [
+          { title: "v2.1.114", summary: "修复 agent team 权限弹窗崩溃。", importance: 1 },
+        ],
+      },
+      {
+        date: "2026-04-23",
+        codex: [
+          { title: "GPT-5.5 进入 Codex，自动审批审查和浏览器操作继续增强", summary: "把工作代理能力再往前推一层。", importance: 4 },
+        ],
+        claude: [],
+      },
+      {
+        date: "2026-04-24",
+        codex: [
+          { title: "支持 remote plugins 与 configured marketplaces 升级", summary: "插件生态进入可远程分发和持续升级阶段。", importance: 3 },
+        ],
+        claude: [],
+      },
+      {
+        date: "2026-05-05",
+        codex: [],
+        claude: [
+          { title: "金融行业 plugins / agent templates 发布", summary: "开始把行业工作流封装成可安装能力。", importance: 4 },
+        ],
+      },
+      {
+        date: "2026-05-06",
+        codex: [],
+        claude: [
+          { title: "v2.1.132", summary: "补充 session_id 环境变量、全屏渲染退出开关等最新可用性更新。", importance: 2 },
+        ],
+      },
+      {
+        date: "2026-05-07",
+        codex: [
+          { title: "Codex for Chrome", summary: "开始更直接地在浏览器标签页和网页应用里工作。", importance: 4 },
+          { title: "CLI 0.129.0", summary: "补强 resume/fork、/ide 上下文注入、workspace 级插件共享与管理。", importance: 2 },
+        ],
+        claude: [],
+      },
+      {
+        date: "2026-05-08",
+        codex: [
+          { title: "CLI 0.130.0", summary: "加入更简单的 remote-control 入口、线程分页和更多 plugin 细节展示。", importance: 2 },
+        ],
+        claude: [],
+      },
+      {
+        date: "2026-05-11",
+        codex: [
+          { title: "Expanded Auto-review documentation", summary: "把 auto-review 生命周期、失败行为和沙箱边界解释得更清楚。", importance: 1 },
+        ],
+        claude: [],
+      },
+      {
+        date: "2026-05-14",
+        codex: [
+          { title: "从 ChatGPT 手机端远程接续 Codex 工作", summary: "移动端开始能查看 live context、审批、改方向，并带来 hooks GA 和 access tokens。", importance: 5 },
+        ],
+        claude: [],
+      },
+    ];
+
+    const body = document.getElementById("timeline-body");
+
+    const renderEvent = (event, productKey) => {
+      if (event.importance >= 4) {
+        return `
+          <article class="card" style="--accent:${PRODUCTS[productKey].color};">
+            <div class="title">${escapeHtml(event.title)}</div>
+            <div class="summary">${escapeHtml(event.summary)}</div>
+          </article>
+        `;
+      }
+      return `
+        <div class="text-event">
+          <span class="title">${escapeHtml(event.title)}</span>
+          <span class="summary">${escapeHtml(event.summary)}</span>
+        </div>
+      `;
+    };
+
+    const renderCell = (events, productKey) => {
+      if (!events.length) return '<td class="empty">-</td>';
+      return `<td><div class="cell-stack">${events.map((event) => renderEvent(event, productKey)).join("")}</div></td>`;
+    };
+
+    body.innerHTML = ROWS.map((row) => `
+      <tr>
+        <th>${row.date}</th>
+        ${renderCell(row.codex, "codex")}
+        ${renderCell(row.claude, "claude")}
+      </tr>
+    `).join("");
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+  </script>
+</body>
+</html>
