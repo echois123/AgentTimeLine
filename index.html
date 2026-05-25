@@ -205,7 +205,6 @@
   <div class="page">
     <div class="header">
       <h1>CodeX和Claude code产品发布时间轴</h1>
-      <p>按时间点并排对齐两款产品的全量更新。重要事件用底色模块展示，小迭代用文字展示；底部附官方来源链接。</p>
     </div>
 
     <div class="legend">
@@ -325,7 +324,13 @@
       { date: "2026-05-08", product: "codex", title: "Codex CLI 0.130.0", summary: "新增 codex remote-control 入口、线程分页、插件分享元数据与 discoverability 控制、view_image 跨环境解析，继续修正 remote compaction、ThreadStore 和 Windows sandbox 细节。", importance: 4 },
       { date: "2026-05-11", product: "codex", title: "Auto-review 文档扩展", summary: "新增专门的 Auto-review 页面，明确 reviewer 生命周期、触发条件、失败行为，以及它与 sandbox / approvals 的关系。", importance: 2 },
       { date: "2026-05-14", product: "codex", title: "Work with Codex from anywhere", summary: "可从 ChatGPT mobile app 连接运行中的 Codex Mac 主机；同次更新还包含 Hooks GA、Codex access tokens、Enterprise admin setup 指南。", importance: 5 },
-      { date: "2026-04", product: "claude", title: "进入 2.1.x 高频迭代期", summary: "/ultrareview、/effort 与更高 effort 档位、auto mode 改进、Remote Control、session recap、worktree、plugins、hooks、themes、permissions、Windows / PowerShell 支持持续增强。", importance: 4 }
+      { date: "2026-05-18", product: "claude", title: "Claude Code v2.1.143 / v2.1.144", summary: "修复 Docker 相关环境变量继承；MCP OAuth 回调支持动态端口；Windows 上改善计划模式退出与进程清理；补充 macOS Homebrew 自动更新诊断。", importance: 3 },
+      { date: "2026-05-20", product: "claude", title: "Claude Code v2.1.145 / v2.1.146", summary: "新增 permission decision tool name 到 hook 输入；修复 Bash 环境变量引用与 fuzzy search 转义；继续改善 MCP 断线恢复、后台任务 shell 选择与 Windows 路径处理。", importance: 3 },
+      { date: "2026-05-21", product: "codex", title: "Appshots 与 Goal mode GA", summary: "Appshots 可保存和对比视觉快照；Goal mode 正式可用，用目标替代一次性提示来管理长任务；任务可在无需登录状态下运行，以便长时间执行。", importance: 5 },
+      { date: "2026-05-21", product: "codex", title: "Computer use 与内置浏览器增强", summary: "computer use 现在可在 Mac 锁屏时继续运行；浏览器支持截图、控制台、网络请求、交互录制等工具；自动 review 和远程连接体验继续打磨。", importance: 5 },
+      { date: "2026-05-21", product: "claude", title: "Claude Compliance API 集成", summary: "组织可通过 Compliance API 导出 Claude Code 记录；本地 CLI 对话会保存 30 天，远程会话按组织数据保留策略保存；面向审计与合规场景。", importance: 4 },
+      { date: "2026-05-22", product: "claude", title: "Claude Code v2.1.147 / v2.1.148", summary: "继续修复插件安装、slash command、review comments 与 zsh 快照加载；改善文件编辑、权限检查、Node 环境与遥测表现。", importance: 3 },
+      { date: "2026-05-25", product: "claude", title: "Claude Code v2.1.149 / v2.1.150", summary: "插件 marketplace 支持集成配置；新增 Claude AI usage detector；修复 Ctrl+C、MCP 传输、认证提示、遥测采样与图片权限等稳定性问题。", importance: 4 },
     ];
 
     const grouped = new Map();
